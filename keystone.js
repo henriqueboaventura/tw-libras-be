@@ -10,22 +10,26 @@ var keystone = require('keystone');
 // and documentation.
 
 keystone.init({
-	'name': 'TW Libras',
-	'brand': 'TW Libras',
+	name: "TW Libras",
+	brand: "TW Libras",
 
-	'less': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.ico',
-	'views': 'templates/views',
-	'view engine': 'pug',
+	less: "public",
+	static: "public",
+	favicon: "public/favicon.ico",
+	views: "templates/views",
+	"view engine": "pug",
 
-	// 'emails': 'templates/emails',
+	mongo: process.env.MONGO_URI || "mongodb://localhost/your-db",
+	"auto update": true,
+	session: true,
+	auth: true,
+	"user model": "User",
 
-	'mongo': process.env.MONGO_URI || 'mongodb://localhost/your-db',
-	'auto update': true,
-	'session': true,
-	'auth': true,
-	'user model': 'User',
+	"cloudinary config": {
+		cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+		api_key: process.env.CLOUDINARY_API_KEY,
+		api_secret: process.env.CLOUDINARY_API_SECRET
+	}
 });
 
 // Load your project's Models
@@ -48,19 +52,7 @@ keystone.set('routes', require('./routes'));
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
 	users: 'users',
+	signs: 'signs'
 });
-
-// Start Keystone to connect to your database and initialise the web server
-
-// if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-// 	console.log('----------------------------------------'
-// 	+ '\nWARNING: MISSING MAILGUN CREDENTIALS'
-// 	+ '\n----------------------------------------'
-// 	+ '\nYou have opted into email sending but have not provided'
-// 	+ '\nmailgun credentials. Attempts to send will fail.'
-// 	+ '\n\nCreate a mailgun account and add the credentials to the .env file to'
-// 	+ '\nset up your mailgun integration');
-// }
-
 
 keystone.start();
